@@ -1,0 +1,18 @@
+version: "3.8"
+
+services:
+  db:
+    container_name: "naturskolan-db"
+    image: postgres:latest
+    restart: awlays
+    environment:
+      - POSTGRES_USER=naturskolan
+      - POSTGRES_PASSWORD=n4tur2k0l4n
+      - POSTGRES_DB=naturskolan
+    ports:
+      - "5432:5432"
+    volumes:
+      - db:/var/lib/postgresql/data
+volumes:
+  db:
+    driver: local

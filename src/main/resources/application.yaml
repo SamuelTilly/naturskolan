@@ -1,0 +1,9 @@
+ktor:
+  application:
+    modules:
+      - org.naturskolan.ApplicationKt.module
+  development: true
+  deployment:
+    port: 8080
+    watch:
+      - classes
