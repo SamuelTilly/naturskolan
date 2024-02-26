@@ -3,7 +3,7 @@ package org.naturskolan.components
 import kotlinx.html.*
 import java.util.*
 
-inline fun FlowContent.timepicker(label: String = "Välj tid", crossinline block: DIV.() -> Unit = {}): Unit {
+inline fun FlowContent.timePicker(label: String = "Välj tid", crossinline block: DIV.() -> Unit = {}): Unit {
     val id = UUID.randomUUID().toString()
     field(id = id, label = label) {
         attributes["x-data"] = """{
@@ -13,7 +13,7 @@ inline fun FlowContent.timepicker(label: String = "Välj tid", crossinline block
             |}""".trimMargin()
         attributes["x-on:keydown.escape"] = "$refs.dropdown.close()"
         attributes["x-on:click.away"] = "$refs.dropdown.close()"
-        fieldInput(type = InputType.text) {
+        fieldInput(id = id, type = InputType.text) {
             placeholder = "08:00"
             attributes["x-on:click"] = """
                 if (open) {
@@ -24,10 +24,6 @@ inline fun FlowContent.timepicker(label: String = "Välj tid", crossinline block
                 }
             """.trimIndent()
             attributes["popovertarget"] = "mypopover"
-//            span(classes = "flex items-center") {
-//                +"Välj tid"
-//
-//            }
         }
         div(classes = "absolute top-0 right-0 px-3 py-2") {
             svg(classes = "w-2.5 h-2.5 ms-3") {

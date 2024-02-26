@@ -12,7 +12,7 @@ import org.jetbrains.exposed.sql.Database
 import org.naturskolan.components.datePicker
 import org.naturskolan.components.primaryButton
 import org.naturskolan.components.secondaryButton
-import org.naturskolan.components.timepicker
+import org.naturskolan.components.timePicker
 import org.naturskolan.templates.LayoutTemplate
 
 fun Application.bookingRoutes(database: Database) {
@@ -27,12 +27,12 @@ fun Application.bookingRoutes(database: Database) {
                     div(classes = "mb-5 flex gap-4 items-center") {
                         datePicker(label = "Välj startdatum")
 //                        datePicker(id = "from", label = "Startar", placeholder = "Välj datum")
-                        timepicker(label = "Välj starttid")
+                        timePicker(label = "Välj starttid")
                     }
                     div(classes = "mb-5 flex gap-4 items-center") {
                         datePicker(label = "Välj slutdatum")
 //                        datePicker(id = "to", label = "Slutar", placeholder = "Välj datum")
-                        timepicker(label = "Välj sluttid")
+                        timePicker(label = "Välj sluttid")
                     }
                     div(classes = "mb-5 flex gap-4 items-center") {
                         label(classes = "block text-sm font-medium text-gray-900 dark:text-white") {

@@ -2,7 +2,7 @@ package org.naturskolan.components
 
 import kotlinx.html.*
 
-inline fun FlowContent.fieldInput(type: InputType, crossinline block: INPUT.() -> Unit = {}) {
+inline fun FlowContent.fieldInput(id: String, type: InputType, crossinline block: INPUT.() -> Unit = {}) {
     input(type = type) {
         classes = setOf(
             "flex",
@@ -27,6 +27,7 @@ inline fun FlowContent.fieldInput(type: InputType, crossinline block: INPUT.() -
             "disabled:opacity-50"
         )
         block()
+        attributes["id"] = id
     }
 }
 

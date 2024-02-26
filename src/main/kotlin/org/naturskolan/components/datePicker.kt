@@ -66,8 +66,7 @@ fun FlowContent.datePicker(label: String = "Välj datum"): Unit {
         datePickerCalculateDays();
     """.trimIndent()
         field(id = id, label = label) {
-            fieldInput(type = InputType.text) {
-                attributes["id"] = id
+            fieldInput(id = id, type = InputType.text) {
                 attributes["x-ref"] = "datePickerInput"
                 attributes["x-on:click"] = "datePickerOpen=!datePickerOpen"
 //                    attributes["x-on:focus"] = "datePickerOpen=true"
