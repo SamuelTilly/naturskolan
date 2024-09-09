@@ -7,7 +7,7 @@ val h2_version: String by project
 
 plugins {
     kotlin("jvm") version "2.0.20"
-    id("io.ktor.plugin") version "2.3.7"
+    id("io.ktor.plugin") version "2.3.12"
     id("org.jetbrains.kotlin.plugin.serialization") version "1.9.22"
 }
 
