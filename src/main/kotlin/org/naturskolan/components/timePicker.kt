@@ -9,17 +9,20 @@ fun FlowContent.timePickerIcon(): Unit =
             attributes["fill"] = "currentColor"
             attributes["viewBox"] = "0 0 512 512"
             path {
-                d = "M464 256A208 208 0 1 1 48 256a208 208 0 1 1 416 0zM0 256a256 256 0 1 0 512 0A256 256 0 1 0 0 256zM232 120V256c0 8 4 15.5 10.7 20l96 64c11 7.4 25.9 4.4 33.3-6.7s4.4-25.9-6.7-33.3L280 243.2V120c0-13.3-10.7-24-24-24s-24 10.7-24 24z"
+                d =
+                    "M464 256A208 208 0 1 1 48 256a208 208 0 1 1 416 0zM0 256a256 256 0 1 0 512 0A256 256 0 1 0 0 256zM232 120V256c0 8 4 15.5 10.7 20l96 64c11 7.4 25.9 4.4 33.3-6.7s4.4-25.9-6.7-33.3L280 243.2V120c0-13.3-10.7-24-24-24s-24 10.7-24 24z"
             }
         }
     }
 
-inline fun FlowContent.timePicker(label: String = "Välj tid", crossinline block: DIV.() -> Unit = {}): Unit {
+fun FlowContent.timePicker(label: String = "Välj tid") {
     val id = UUID.randomUUID().toString()
-    val hours = (1..24).map { i -> i.toString().padStart(2, '0') }
+    val hours = (0..24).map { i -> i.toString().padStart(2, '0') }
     val minutes = (0 until 6).map { i -> (i * 10).toString().padStart(2, '0') }
     field(id = id, label = label) {
         attributes["x-data"] = """{
+            |   hour: null,
+            |   minute: null,
             |   close(focusAfter) {
             |       if ($refs.dropdown.open) {
             |           $refs.dropdown.close()
@@ -32,7 +35,14 @@ inline fun FlowContent.timePicker(label: String = "Välj tid", crossinline block
             |       } else {
             |           $refs.dropdown.show()
             |       }
-            |   }
+            |   },
+            |   getTimeSlice(time) {
+            |       return ('0' + (time ? time : '0')).slice(-2)
+            |   },
+            |   setTime(hour, minute) {
+            |       this.hour =  hour
+            |       this.minute = minute
+            |   },
             |}""".trimMargin()
         attributes["x-on:keydown.escape"] = "$refs.dropdown.close()"
         attributes["x-on:click.away"] = "$refs.dropdown.close()"
@@ -40,6 +50,15 @@ inline fun FlowContent.timePicker(label: String = "Välj tid", crossinline block
             placeholder = "hh:mm"
             attributes["x-ref"] = "input"
             attributes["x-on:click"] = "close()"
+            attributes["x-on:focus"] =
+                "setTime('01','00'); $el.setAttribute('inputmode', 'numeric')"
+            attributes["x-on:selectionchange"] =
+                "$el.selectionStart > 2 ? $el.setSelectionRange(3,5) : $el.setSelectionRange(0,2)"
+            attributes["x-on:blur"] = "$el.setAttribute('inputmode', 'text')"
+            attributes["x-on:change"] =
+                "hour = getTimeSlice($el.value.split(':')[0]); minute = getTimeSlice($el.value.split(':')[1])"
+            attributes["x-bind:value"] =
+                "Boolean(hour || minute) ? getTimeSlice(hour) + \":\" + getTimeSlice(minute) : '' "
         }
         div(classes = "absolute top-0 bottom-0 right-0 flex items-center px-3 cursor-pointer text-neutral-400 group-hover:text-neutral-500") {
             attributes["x-on:click"] = "toggle()"
@@ -69,6 +88,7 @@ inline fun FlowContent.timePicker(label: String = "Välj tid", crossinline block
                         li {
                             attributes["aria-role"] = "option"
                             attributes["aria-label"] = hour
+                            attributes["x-bind:aria-selected"] = "hour === '$hour'"
                             classes = setOf(
                                 "text-center",
                                 "transition-colors",
@@ -88,6 +108,7 @@ inline fun FlowContent.timePicker(label: String = "Välj tid", crossinline block
                         li {
                             attributes["aria-role"] = "option"
                             attributes["aria-label"] = minute
+                            attributes["x-bind:aria-selected"] = "minute === '$minute'"
                             classes = setOf(
                                 "text-center",
                                 "transition-colors",

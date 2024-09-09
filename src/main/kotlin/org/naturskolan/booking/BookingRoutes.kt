@@ -38,11 +38,11 @@ fun Application.bookingRoutes(database: Database) {
                         label(classes = "block text-sm font-medium text-gray-900 dark:text-white") {
                             +"Upprepa"
                         }
-                        primaryButton() { +"dropdown" }
+                        primaryButton { +"dropdown" }
                     }
                     div(classes = "flex gap-4") {
-                        secondaryButton() { +"Avbryt" }
-                        primaryButton() { +"Lägg till" }
+                        secondaryButton { +"Avbryt" }
+                        primaryButton { +"Lägg till" }
                     }
                     for (book in books) {
                         div { +"Booking: ${book.startTime} - ${book.endTime}" }
